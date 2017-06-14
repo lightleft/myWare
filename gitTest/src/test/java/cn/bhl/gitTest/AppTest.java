@@ -1,10 +1,10 @@
 package cn.bhl.gitTest;
 
-/**
- * Unit test for simple App.
- */
+import org.junit.Test;
+
 public class AppTest {
-  public void fun(){
-  System.out.print("hello world");
-   }
+	@Test
+	public void fun() {
+		System.out.print("hello world");
+	}
 }
