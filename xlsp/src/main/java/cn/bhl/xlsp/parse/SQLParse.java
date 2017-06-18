@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ public class SQLParse {
 	public SQLParse(ParseService parseService) {
 		this.parseService = parseService;
 		sqls = new ArrayList<>();
+		params = new HashMap<>();
 	}
 
 	private void getSqls(Sheet sheet, List<String> sqls) {
@@ -71,7 +73,7 @@ public class SQLParse {
 		}
 	}
 
-	public String fill(String sourceFilePath, String targetDirPath, int index, Map<String, String> p) {
+	public String fill(String sourceFilePath, String targetDirPath, Map<String, String> p) {
 		StringBuilder targetName = new StringBuilder();
 		Workbook source = null;
 		Workbook target = null;
@@ -91,17 +93,17 @@ public class SQLParse {
 				throw new RuntimeException("Template error");
 			}
 			String fileName = targetName.toString();
+			getSqls(source.getSheetAt(1),this.sqls);
 			switch (type) {
 			case "1": {
 				getGenData(p);
-				Sheet newSheet = target.createSheet();
 				String filePath = null;
 				if (targetDirPath.endsWith("/") || targetDirPath.endsWith("\\")) {
 					filePath = targetDirPath + fileName;
 				} else {
 					filePath = targetDirPath + "/" + fileName;
 				}
-				XlsUtils.generalFill(source.getSheetAt(index), target, this.params, filePath);
+				XlsUtils.generalFill(source.getSheetAt(0), target, this.params, filePath);
 				break;
 			}
 
