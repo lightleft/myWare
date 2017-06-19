@@ -22,13 +22,13 @@ import cn.bhl.xlsp.utils.XlsUtils;
 public class SQLParse {
 	private List<String> sqls;
 	private Map<String, String> params;
+	private Map<String, String[]> someParams;
 	private String type = "1";
 	private ParseService parseService;
 
 	public SQLParse(ParseService parseService) {
 		this.parseService = parseService;
 		sqls = new ArrayList<>();
-		params = new HashMap<>();
 	}
 
 	private void getSqls(Sheet sheet, List<String> sqls) {
@@ -68,8 +68,21 @@ public class SQLParse {
 	}
 
 	private void getGenData(Map<String, String> p) {
+		params = new HashMap<>();
 		for (String sql : this.sqls) {
-			parseService.run(sql, p, params);
+			Map<String, String> map = parseService.runGen(sql, p);
+			if (map != null)
+				this.params.putAll(map);
+		}
+	}
+
+	private void getSomeData(Map<String, String> p) {
+		someParams = new HashMap<>();
+		for (String sql : this.sqls) {
+			Map<String, String[]> map = parseService.runEach(sql, p);
+			if (map != null)
+				this.someParams.putAll(map);
+
 		}
 	}
 
@@ -93,7 +106,7 @@ public class SQLParse {
 				throw new RuntimeException("Template error");
 			}
 			String fileName = targetName.toString();
-			getSqls(source.getSheetAt(1),this.sqls);
+			getSqls(source.getSheetAt(1), this.sqls);
 			switch (type) {
 			case "1": {
 				getGenData(p);
@@ -106,7 +119,17 @@ public class SQLParse {
 				XlsUtils.generalFill(source.getSheetAt(0), target, this.params, filePath);
 				break;
 			}
-
+			case "2": {
+				getSomeData(p);
+				String filePath = null;
+				if (targetDirPath.endsWith("/") || targetDirPath.endsWith("\\")) {
+					filePath = targetDirPath + fileName;
+				} else {
+					filePath = targetDirPath + "/" + fileName;
+				}
+				XlsUtils.eachFill(source.getSheetAt(0), target, this.someParams, filePath);
+				break;
+			}
 			default: {
 				break;
 			}

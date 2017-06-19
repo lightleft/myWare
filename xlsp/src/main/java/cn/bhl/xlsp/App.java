@@ -21,19 +21,31 @@ public class App {
 	public static void main(String[] args) {
 		SQLParse sp = new SQLParse(new ParseService() {
 			private App app = new App();
+
 			@Override
-			public void run(String sql, Map<String, String> p, Map<String, String> params) {
+			public Map<String, String> runGen(String sql, Map<String, String> p) {
+				Map<String, String> params = null;
 				Map<String, Object> getP = app.get(sql, p);
-				for (Entry<String, Object> entry : getP.entrySet()) {
-					params.put(entry.getKey(), entry.getValue() == null ? "" : entry.getValue().toString());
+				if (getP != null && getP.size() > 0) {
+					params = new HashMap<>();
+					for (Entry<String, Object> entry : getP.entrySet()) {
+						params.put(entry.getKey(), entry.getValue() == null ? "" : entry.getValue().toString());
+					}
 				}
+				return params;
+			}
+
+			@Override
+			public Map<String, String[]> runEach(String sql, Map<String, String> p) {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		});
 		sp.fill("tem-jjwj-final1.xlsx", "D:\\test", null);
 	}
 
 	public Map<String, Object> get(String sql, Map<String, String> p) {
-		return find(sql,p);
+		return find(sql, p);
 	}
 
 	private String username = "root";
@@ -73,7 +85,7 @@ public class App {
 				int l = rd.getColumnCount();
 				d = new HashMap<>();
 				for (int i = 0; i < l; i++) {
-					String key = rd.getColumnLabel(i+1);
+					String key = rd.getColumnLabel(i + 1);
 					d.put(key, rs.getObject(key));
 				}
 			}

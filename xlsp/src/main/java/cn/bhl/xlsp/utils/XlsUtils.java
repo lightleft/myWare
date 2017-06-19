@@ -52,58 +52,11 @@ public final class XlsUtils {
 	 * @return String 文件名
 	 * @date 2017年6月12日 下午8:25:35
 	 */
-	public static String eachFill(String sourceFilePath, String targetDirPath, int index,
-			List<Map<String, String[]>> data, int size) {
-		StringBuilder targetName = new StringBuilder();
-		Workbook source = null;
-		Workbook target = null;
-		InputStream in = null;
-		try {
-			if (sourceFilePath.endsWith(XLS)) {
-				targetName.append(UUID.generateShortUuid()).append(XLS);
-				in = new FileInputStream(sourceFilePath);
-				source = new HSSFWorkbook(in);
-				target = new HSSFWorkbook();
-			} else if (sourceFilePath.endsWith(XLSX)) {
-				targetName.append(UUID.generateShortUuid()).append(XLSX);
-				in = new FileInputStream(sourceFilePath);
-				source = new XSSFWorkbook(in);
-				target = new XSSFWorkbook();
-			} else {
-				throw new RuntimeException("Template error");
-			}
-			if (data != null && data.size() > 0) {
-				for (int i = 0; i < size; i++) {
-					Sheet newSheet = target.createSheet();
-					PoiUtils.copySheet(source.getSheetAt(index), newSheet, target);
-					if (data.size() > i) {
-						_fillByList(newSheet, data.get(i));
-					} else {
-						_fillByList(newSheet, null);
-					}
-				}
-			} else {
-				Sheet newSheet = target.createSheet();
-				PoiUtils.copySheet(source.getSheetAt(index), newSheet, target);
-				_fillByList(newSheet, null);
-			}
-			String fileName = targetName.toString();
-			if (targetDirPath.endsWith("/") || targetDirPath.endsWith("\\")) {
-				createFile(target, targetDirPath + fileName);
-			} else {
-				createFile(target, targetDirPath + "/" + fileName);
-			}
-			return fileName;
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} finally {
-			try {
-				if (in != null)
-					in.close();
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		}
+	public static void eachFill(Sheet source, Workbook target, Map<String, String[]> data, String filePath) {
+		Sheet newSheet = target.createSheet();
+		PoiUtils.copySheet(source, newSheet, target);
+		_fillByList(newSheet, data);
+		createFile(target, filePath);
 	}
 
 	private static void createFile(Workbook target, String filePath) {
