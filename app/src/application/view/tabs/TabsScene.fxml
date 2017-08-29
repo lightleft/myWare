@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="container" prefHeight="469.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.tabs.TabsContr">
+	<children>
+		<Pane id="main" prefHeight="469.0" prefWidth="727.0">
+			<children>
+				<TabPane prefHeight="469.0" prefWidth="727.0" tabClosingPolicy="UNAVAILABLE">
+					<tabs>
+						<Tab fx:id="dataPaneTab" closable="false" text="数据显示">
+							<content>
+								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+									<children>
+										<Pane prefHeight="440.0" prefWidth="727.0" AnchorPane.leftAnchor="0.0">
+											<children>
+												<ScrollPane layoutY="58.0" prefHeight="341.0" prefViewportHeight="200.0" prefViewportWidth="200.0" prefWidth="727.0">
+													<content>
+														<TableView id="dataTable" fx:id="dataTable" layoutX="144.0" layoutY="101.0" prefHeight="341.0" prefWidth="712.0" />
+													</content>
+												</ScrollPane>
+                                    <Pane layoutY="398.0" prefHeight="42.0" prefWidth="727.0">
+                                       <children>
+                                          <Label fx:id="showPageInfoLabel" layoutX="34.0" layoutY="10.0" prefHeight="23.0" prefWidth="239.0" />
+                                       </children>
+                                    </Pane>
+                                    <Pane prefHeight="60.0" prefWidth="727.0">
+                                       <children>
+                                          <ComboBox fx:id="tableComboBox" layoutX="87.0" layoutY="19.0" prefWidth="150.0" />
+                                          <Label layoutX="31.0" layoutY="19.0" prefHeight="23.0" prefWidth="45.0" text="表选择:" />
+                                       </children>
+                                    </Pane>
+											</children>
+										</Pane>
+									</children>
+								</AnchorPane>
+							</content>
+						</Tab>
+						<Tab fx:id="configPaneTab" closable="false" text="映射配置">
+							<content>
+								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="438.0" prefWidth="727.0">
+									<children>
+										<ScrollPane hbarPolicy="NEVER" layoutY="24.0" prefHeight="416.0" prefViewportHeight="322.0" prefViewportWidth="727.0" prefWidth="727.0" vbarPolicy="ALWAYS">
+											<content>
+												<TableView id="relaTable" fx:id="relaTable" layoutX="104.0" layoutY="95.0" prefHeight="415.0" prefWidth="720.0">
+													<columns>
+														<TableColumn editable="false" maxWidth="250.0" minWidth="100.0" prefWidth="179.0" text="数据字段" />
+														<TableColumn editable="false" maxWidth="250.0" minWidth="100.0" prefWidth="179.0" sortable="false" text="类型" />
+														<TableColumn editable="false" maxWidth="250.0" minWidth="100.0" prefWidth="179.0" text="转换字段" />
+														<TableColumn editable="false" maxWidth="250.0" minWidth="100.0" prefWidth="179.0" text="类型" />
+													</columns>
+												</TableView>
+											</content>
+										</ScrollPane>
+										<MenuBar>
+											<menus>
+												<Menu mnemonicParsing="false" text="新增">
+													<items>
+														<MenuItem fx:id="relaAddBtn" mnemonicParsing="false" onAction="#add" text="新增关系" />
+													</items>
+												</Menu>
+												<Menu mnemonicParsing="false" text="修改">
+													<items>
+														<MenuItem fx:id="relaUpdateBtn" mnemonicParsing="false" onAction="#update" text="修改关系" />
+													</items>
+												</Menu>
+												<Menu mnemonicParsing="false" text="删除">
+													<items>
+														<MenuItem fx:id="relaDeleteBtn" mnemonicParsing="false" onAction="#delete" text="删除关系" />
+													</items>
+												</Menu>
+											</menus>
+										</MenuBar>
+									</children>
+								</AnchorPane>
+							</content>
+						</Tab>
+					</tabs>
+				</TabPane>
+			</children>
+		</Pane>
+	</children>
+</AnchorPane>
