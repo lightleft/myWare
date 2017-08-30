@@ -10,12 +10,13 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 	public static Stage LOGIN_STAGE;
 	public static Stage TABS_STAGE;
-	private Logger log = LoggerFactory.getLogger(Main.class);
+	private static Logger log = LoggerFactory.getLogger(Main.class);
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -24,7 +25,9 @@ public class Main extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("./view/tabs/TabsScene.fxml"));
 			// Scene scene = new Scene(root, 341, 116);
 			Scene scene = new Scene(root, 718, 460);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("./application.css").toExternalForm());
+			primaryStage.getIcons().add(new Image("/application/util/res/info.png"));
+			primaryStage.setTitle("±¦ºùÂ«x 1.0");
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			primaryStage.show();
@@ -37,14 +40,21 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		initApp();
 		initCache();
+		log.info("System config load OK! show Stage!");
 		launch(args);
 	}
 
+	/**
+	 * ÈÝÆ÷³õÊ¼»¯
+	 */
 	public static void initApp() {
 		AppContext.init();
 		AppRegister.init();
 	}
 
+	/**
+	 * »º´æ³õÊ¼»¯
+	 */
 	public static void initCache() {
 		Cache.init();
 	}

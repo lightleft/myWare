@@ -33,7 +33,7 @@ public class LoginContr implements Initializable {
 
 	public void fileSelected(ActionEvent event) {
 		final FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("é€‰æ‹©æ•°æ®æ–‡ä»¶");
+		fileChooser.setTitle("ÇëÑ¡ÔñÎÄ¼ş");
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("DBæ–‡ä»¶", "*.db"));
 		File file = fileChooser.showOpenDialog(Main.LOGIN_STAGE);
 		if (file != null) {
@@ -59,7 +59,7 @@ public class LoginContr implements Initializable {
 				log.error(e.getMessage());
 			}
 		} else {
-			IAlert7.showMessageDialog(Main.LOGIN_STAGE, "æ‰“å¼€æ–‡ä»¶ä¸å­˜åœ¨", "é”™è¯¯æç¤º");
+			IAlert7.showMessageDialog(Main.LOGIN_STAGE, "ÌáÊ¾ĞÅÏ¢", "ÎÄ¼ş²»´æÔÚ");
 		}
 	}
 

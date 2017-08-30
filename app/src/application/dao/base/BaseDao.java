@@ -15,16 +15,30 @@ public abstract class BaseDao {
 	private DbUtil du = DbUtil.getInstance();
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
+	public int getCount(String sql, Object... objs) {
+		int c = -1;
+		try (Connection conn = du.getConn();
+				PreparedStatement ps = getPs(conn, sql, objs);
+				ResultSet rs = ps.executeQuery();) {
+			if (rs.next()) {
+				c = rs.getInt(1);
+			}
+			log.info("search success! sql ---> {}", sql);
+		} catch (SQLException e) {
+			log.error("search error! error ---> {}", e.getMessage());
+		}
+		return c;
+	}
+
 	public <T> T searchForSql(String sql, RsHandler<T> handler, Object... objs) {
 		T t = null;
 		try (Connection conn = du.getConn();
 				PreparedStatement ps = getPs(conn, sql, objs);
 				ResultSet rs = ps.executeQuery();) {
 			t = handler.handler(rs);
-
 			log.info("search success! sql ---> {}", sql);
 		} catch (SQLException e) {
-			log.info("search error! error ---> {}", e.getMessage());
+			log.error("search error! error ---> {}", e.getMessage());
 		}
 		return t;
 	}
@@ -41,7 +55,7 @@ public abstract class BaseDao {
 			result = ps.executeUpdate();
 			log.info("search success! sql ---> {}", sql);
 		} catch (SQLException e) {
-			log.info("search error! error ---> {}", e.getMessage());
+			log.error("search error! error ---> {}", e.getMessage());
 		}
 		return result;
 	}
@@ -55,4 +69,5 @@ public abstract class BaseDao {
 		}
 		return ps;
 	}
+
 }

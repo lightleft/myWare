@@ -23,9 +23,9 @@ public final class AppRegister {
 			load("dao");
 			load("biz");
 			giveBean();
-			log.info("cache加载完成");
+			log.info("register load end");
 		} catch (Exception e) {
-			log.info("cache加载失败,异常信息:{}", e.getMessage());
+			log.info("register load fail,error info:{}", e.getMessage());
 		}
 
 	}
@@ -44,14 +44,6 @@ public final class AppRegister {
 		return t;
 	}
 
-	/**
-	 * 动态加载子类
-	 * 
-	 * @param clazz
-	 * @param subPageName
-	 * @return
-	 * @throws Exception
-	 */
 	private final static void load(String subPageName) throws Exception {
 		URL url = Main.class.getResource(subPageName);
 		String pack = Main.class.getPackage().getName();
@@ -72,11 +64,12 @@ public final class AppRegister {
 				RegistAnno exportHandlerAnno = slazz.getAnnotation(RegistAnno.class);
 				if (exportHandlerAnno != null) {
 					String key = exportHandlerAnno.value();
-					Object obj = apps.put(key, slazz.newInstance());
+					Object instance = slazz.newInstance();
+					Object obj = apps.put(key, instance);
 					if (obj != null) {
-						throw new IllegalStateException("初始化错误, " + key + " 重复");
+						throw new IllegalStateException("regist fail, " + key + " �ظ���");
 					}
-					log.info("regist {}", key);
+					log.info("regist {} success", instance.getClass().getName());
 				}
 			}
 	}

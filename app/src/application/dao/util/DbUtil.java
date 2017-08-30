@@ -1,8 +1,6 @@
 package application.dao.util;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
@@ -11,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.pool.DruidDataSourceFactory;
 
 import application.cache.AppContext;
 
@@ -20,24 +19,17 @@ public final class DbUtil {
 	private String url;
 	private String driver;
 	private String username;
-	private String password;
 
 	private DbUtil() {
 		url = AppContext.getDbConfig("odbc.conn-name", "jdbc:odbc:IDataBase");
 		driver = AppContext.getDbConfig("odbc.driver", "sun.jdbc.odbc.JdbcOdbcDriver");
 		username = AppContext.getDbConfig("odbc.username");
-		password = AppContext.getDbConfig("odbc.password");
-		DruidDataSource db = new DruidDataSource();
-		db.setUrl(url);
-		db.setDriverClassName(driver);
-		db.setUsername(username);
-		db.setPassword(password);
 		try {
-			db.init();
+			DruidDataSource db = (DruidDataSource) DruidDataSourceFactory.createDataSource(AppContext.getDbConfigs());
 			dbSource = db;
-			log.info("Êï∞ÊçÆÊ∫êÂä†ËΩΩÊàêÂäü,driver: {} ,url: {} ,username: {}", driver, url, username);
-		} catch (SQLException e) {
-			log.error("Êï∞ÊçÆÊ∫êÂä†ËΩΩÂ§±Ë¥•,ÂºÇÂ∏∏‰ø°ÊÅØ:{}", e.getMessage());
+			log.info(" ˝æ›‘¥º”‘ÿÕÍ≥…,driver: {} ,url: {} ,username: {}", driver, url, username);
+		} catch (Exception e) {
+			log.error(" ˝æ›‘¥º”‘ÿ ß∞‹,“Ï≥£–≈œ¢:{}", e.getMessage());
 		}
 
 	}
@@ -56,15 +48,5 @@ public final class DbUtil {
 
 	public DataSource getSource() {
 		return dbSource;
-	}
-
-	public static void main(String[] args) throws SQLException {
-		try (Connection conn = getInstance().getSource().getConnection();
-				PreparedStatement pstmt = conn.prepareStatement("select  * from jkcolumn ");
-				ResultSet rs = pstmt.executeQuery();) {
-			while (rs.next()) {
-				System.out.println(rs.getString(1));
-			}
-		}
 	}
 }

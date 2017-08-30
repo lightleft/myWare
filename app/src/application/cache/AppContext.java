@@ -13,23 +13,23 @@ import org.slf4j.LoggerFactory;
 
 public final class AppContext {
 
-	private static Properties prop = new Properties();
+	private static Properties dbProp = new Properties();
 	private static List<?> RELAS = new ArrayList<>();
 	private static Map<String, ?> MAPS = new HashMap<>();
 	private static Logger log = LoggerFactory.getLogger(AppContext.class);
 
 	public static void init() {
 		try (InputStream conis = new FileInputStream("config.properties");
-				InputStream appis = new FileInputStream("appctx.properties");) {
-			prop.load(appis);
-			log.info("配置项加载完成！");
+				InputStream appis = new FileInputStream("db.properties");) {
+			dbProp.load(appis);
+			log.info("config load success");
 		} catch (Exception e) {
-			log.error("配置项加载失败,一场信息：{}", e.getMessage());
+			log.error("config load fail,error info: {}", e.getMessage());
 		}
 	}
 
 	public static void refresh() {
-		log.debug("配置项更新完成！");
+		log.debug("config refresh success");
 	}
 
 	public static List<?> getRelas() {
@@ -41,10 +41,14 @@ public final class AppContext {
 	}
 
 	public static String getDbConfig(String key, String df) {
-		return prop.getProperty(key, df).trim();
+		return dbProp.getProperty(key, df).trim();
 	}
 
 	public static String getDbConfig(String key) {
-		return prop.getProperty(key, "").trim();
+		return dbProp.getProperty(key, "").trim();
+	}
+
+	public static Properties getDbConfigs() {
+		return dbProp;
 	}
 }

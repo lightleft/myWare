@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="438.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="application.view.searchFilter.SearchFilter">
+   <children>
+      <ComboBox fx:id="colSelectBox" layoutX="119.0" layoutY="29.0" prefWidth="150.0" />
+      <Label layoutX="23.0" layoutY="33.0" prefHeight="15.0" prefWidth="77.0" text="过滤字段选择:" />
+      <TableView fx:id="colTable" layoutX="19.0" layoutY="60.0" prefHeight="321.0" prefWidth="266.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

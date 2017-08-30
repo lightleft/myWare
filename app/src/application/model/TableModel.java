@@ -1,11 +1,20 @@
 package application.model;
 
-public class TableModel {
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class TableModel implements Comparator<TableModel> {
 	private Integer dbId;
 	private String enName;
 	private String chName;
 	private Integer dbType;
 	private Integer volDbId;
+	private List<ColumnModel> column;
+	private Map<Integer, ColumnModel> idCols;
+	private Map<String, ColumnModel> enCols;
+	private Map<String, ColumnModel> chCols;
 
 	public Integer getDbId() {
 		return dbId;
@@ -47,4 +56,46 @@ public class TableModel {
 		this.volDbId = volDbId;
 	}
 
+	public List<ColumnModel> getColumn() {
+		return column;
+	}
+
+	public void setColumn(List<ColumnModel> column) {
+		this.column = column;
+		idCols = new HashMap<>();
+		enCols = new HashMap<>();
+		chCols = new HashMap<>();
+		for (ColumnModel col : column) {
+			idCols.put(col.getColId(), col);
+			enCols.put(col.getColEnName(), col);
+			chCols.put(col.getColChName(), col);
+		}
+	}
+
+	public ColumnModel getColumnById(Integer id) {
+		return idCols.get(id);
+	}
+
+	public ColumnModel getColumnByEnName(String enName) {
+		return enCols.get(enName);
+	}
+
+	public ColumnModel getColumnByChName(String chName) {
+		return chCols.get(chName);
+	}
+
+	public String[] getColumnChNames() {
+		String[] colChNames = new String[chCols.size()];
+		return chCols.keySet().toArray(colChNames);
+	}
+
+	@Override
+	public int compare(TableModel o1, TableModel o2) {
+		int swap = -1;
+		int notSwap = 1;
+		if (o1.getDbId() > o2.getDbId()) {
+			return swap;
+		}
+		return notSwap;
+	}
 }

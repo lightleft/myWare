@@ -17,20 +17,24 @@
 									<children>
 										<Pane prefHeight="440.0" prefWidth="727.0" AnchorPane.leftAnchor="0.0">
 											<children>
-												<ScrollPane layoutY="58.0" prefHeight="341.0" prefViewportHeight="200.0" prefViewportWidth="200.0" prefWidth="727.0">
-													<content>
-														<TableView id="dataTable" fx:id="dataTable" layoutX="144.0" layoutY="101.0" prefHeight="341.0" prefWidth="712.0" />
-													</content>
-												</ScrollPane>
-                                    <Pane layoutY="398.0" prefHeight="42.0" prefWidth="727.0">
+                                    <Pane layoutY="400.0" prefHeight="40.0" prefWidth="727.0">
                                        <children>
-                                          <Label fx:id="showPageInfoLabel" layoutX="34.0" layoutY="10.0" prefHeight="23.0" prefWidth="239.0" />
+                                          <Label fx:id="showPageInfoLabel" layoutX="34.0" layoutY="10.0" prefHeight="23.0" prefWidth="265.0" />
+                                          <Button fx:id="preBtn" disable="true" layoutX="548.0" layoutY="9.0" mnemonicParsing="false" onAction="#prePage" text="上一页" />
+                                          <Button fx:id="nextBtn" disable="true" layoutX="624.0" layoutY="9.0" mnemonicParsing="false" onAction="#nextPage" text="下一页" />
                                        </children>
                                     </Pane>
                                     <Pane prefHeight="60.0" prefWidth="727.0">
                                        <children>
-                                          <ComboBox fx:id="tableComboBox" layoutX="87.0" layoutY="19.0" prefWidth="150.0" />
+                                          <ComboBox fx:id="tableComboBox" layoutX="87.0" layoutY="19.0" onAction="#tableComboChange" prefWidth="150.0" />
                                           <Label layoutX="31.0" layoutY="19.0" prefHeight="23.0" prefWidth="45.0" text="表选择:" />
+                                          <Button fx:id="searchFilterBtn" layoutX="336.0" layoutY="19.0" mnemonicParsing="false" onAction="#searchFilter" prefHeight="23.0" prefWidth="103.0" text="设置过滤条件" />
+                                          <Button fx:id="exportIndexBtn" layoutX="524.0" layoutY="19.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="113.0" text="目录导出" />
+                                       </children>
+                                    </Pane>
+                                    <Pane layoutY="60.0" prefHeight="340.0" prefWidth="727.0">
+                                       <children>
+														<TableView id="dataTable" fx:id="dataTable" maxHeight="338.0" prefHeight="340.0" prefWidth="727.0" />
                                        </children>
                                     </Pane>
 											</children>
