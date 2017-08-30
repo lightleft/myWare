@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import application.Main;
-import application.util.AppContext;
-import application.util.IAlert;
+import application.cache.AppContext;
+import application.util.IAlert7;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +17,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -45,9 +44,7 @@ public class LoginContr implements Initializable {
 	public void submit(ActionEvent event) {
 		String fileName = fileNameShowField.getText();
 		File file = new File(fileName);
-		// if (file.exists() && file.isFile()) {
-		boolean f = true;
-		if (f) {
+		if (file.exists() && file.isFile()) {
 			Main.LOGIN_STAGE.hide();
 			try {
 				Stage stage = new Stage();
@@ -58,12 +55,11 @@ public class LoginContr implements Initializable {
 				stage.setScene(scene);
 				stage.setResizable(false);
 				stage.show();
-				AppContext.init();
 			} catch (Exception e) {
 				log.error(e.getMessage());
 			}
 		} else {
-			IAlert.alert_informationDialog("错误提示", "打开文件不存在", Main.LOGIN_STAGE);
+			IAlert7.showMessageDialog(Main.LOGIN_STAGE, "打开文件不存在", "错误提示");
 		}
 	}
 
