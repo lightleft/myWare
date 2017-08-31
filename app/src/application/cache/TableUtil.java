@@ -47,4 +47,8 @@ public final class TableUtil {
 		}
 		return tableChNames;
 	}
+
+	public static List<TableModel> getTables() {
+		return MODELS;
+	}
 }

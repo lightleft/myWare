@@ -53,4 +53,32 @@ public class ColumnUtil {
 		}
 		return null;
 	}
+
+	public static boolean isInt(ColumnModel model) {
+		if (model == null)
+			return false;
+		if (ColumnModel.DATA_TYPE.equals(model.getColType()))
+			return true;
+		if (ColumnModel.INT_TYPE.equals(model.getColType()))
+			return true;
+		return false;
+	}
+
+	public static boolean isString(ColumnModel model) {
+		if (model == null)
+			return false;
+		if (ColumnModel.CHAR_TYPE.equals(model.getColType()))
+			return true;
+		return false;
+
+	}
+
+	public static boolean isBoolean(ColumnModel model) {
+		if (model == null)
+			return false;
+		if (ColumnModel.BOOLEAN_TYPE.equals(model.getColType()))
+			return true;
+		return false;
+
+	}
 }

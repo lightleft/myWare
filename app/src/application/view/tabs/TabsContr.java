@@ -16,7 +16,8 @@ import application.cache.TableUtil;
 import application.model.ColumnModel;
 import application.model.PageBean;
 import application.model.TableModel;
-import application.util.StringUtil;
+import application.model.Trem;
+import application.view.searchFilter.SearchFilter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,15 +31,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import javafx.util.StringConverter;
-import javafx.util.converter.IntegerStringConverter;
 
 @SuppressWarnings("all")
 public class TabsContr implements Initializable {
@@ -61,7 +57,7 @@ public class TabsContr implements Initializable {
 	@FXML
 	private Label showPageInfoLabel;
 	@FXML
-	private ComboBox<String> tableComboBox;
+	private ComboBox<TableModel> tableComboBox;
 	@FXML
 	private Button preBtn;
 	@FXML
@@ -70,18 +66,20 @@ public class TabsContr implements Initializable {
 	private Button searchFilterBtn;
 	@FXML
 	private Button exportIndexBtn;
+	@FXML
+	private Button search;
 
 	private ArchiveService archiveService = AppRegister.getBean("archiveService", ArchiveService.class);
 	private int index;
-	public static String tableName;
+	public static TableModel table;
+	private List<Trem> trems;
 
 	/**
 	 * 初始化
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		String[] tables = TableUtil.getChNames();
-		ObservableList<String> options = FXCollections.observableArrayList(tables);
+		ObservableList<TableModel> options = FXCollections.observableArrayList(TableUtil.getTables());
 		tableComboBox.setItems(options);
 	}
 
@@ -131,24 +129,38 @@ public class TabsContr implements Initializable {
 
 	public void tableComboChange(ActionEvent event) {
 		this.index = 1;
+		SearchFilter.clearTable();
+		this.trems = null;
+		PageBean pageBean = getSearchData();
+		refreshDataTable(pageBean);
+		search.setDisable(false);
+	}
+
+	public void searchFilter(ActionEvent event) throws IOException {
+		if (TabsContr.table == null)
+			return;
+		if (Main.SEARCH_STAGE == null) {
+			Stage stage = new Stage();
+			Main.SEARCH_STAGE = stage;
+			Parent root = FXMLLoader.load(getClass().getResource("../searchFilter/SearchFilter.fxml"));
+			Scene scene = new Scene(root, 300, 438);
+			scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
+			stage.setScene(scene);
+			stage.setResizable(false);
+		}
+		Main.SEARCH_STAGE.show();
+
+	}
+
+	public void search(ActionEvent event) {
+		trems = SearchFilter.getDataAll();
+		this.index = 1;
 		PageBean pageBean = getSearchData();
 		refreshDataTable(pageBean);
 	}
 
-	public void searchFilter(ActionEvent event) throws IOException {
-		if (TabsContr.tableName == null)
-			return;
-		Stage stage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource("../searchFilter/SearchFilter.fxml"));
-		Scene scene = new Scene(root, 300, 438);
-		scene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm());
-		stage.setScene(scene);
-		stage.setResizable(false);
-		stage.show();
-	}
-
 	public void exportIndex(ActionEvent event) {
-
+		// TODO
 	}
 
 	/*--------------------------私有方法区--------------------------*/
@@ -160,11 +172,9 @@ public class TabsContr implements Initializable {
 	 */
 
 	private PageBean getSearchData() {
-		Object o = tableComboBox.getSelectionModel().getSelectedItem();
-		String tableName = StringUtil.toString(o);
-		TabsContr.tableName = tableName;
-		TableModel table = TableUtil.getTableByName(tableName);
+		TabsContr.table = tableComboBox.getSelectionModel().getSelectedItem();
 		PageBean pageBean = new PageBean(table);
+		pageBean.setTrems(trems);
 		pageBean.setIndex(index);
 		pageBean = archiveService.getArch(pageBean);
 		return pageBean;
@@ -188,9 +198,10 @@ public class TabsContr implements Initializable {
 	private ObservableList<Map<String, Object>> generateDataInMap(List<ColumnModel> cols,
 			List<Map<String, Object>> data) {
 		ObservableList<Map<String, Object>> allData = FXCollections.observableArrayList();
-		for (int i = 0; i < data.size(); i++) {
-			allData.add(data.get(i));
-		}
+		if (data != null && !data.isEmpty())
+			for (int i = 0; i < data.size(); i++) {
+				allData.add(data.get(i));
+			}
 		return allData;
 	}
 

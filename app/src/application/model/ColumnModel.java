@@ -13,6 +13,7 @@ public class ColumnModel implements Comparator<ColumnModel> {
 	private String colChName;
 	private String colType;
 	private Integer colWidth;
+
 	public Integer getDbId() {
 		return dbId;
 	}
@@ -72,6 +73,11 @@ public class ColumnModel implements Comparator<ColumnModel> {
 			return swap;
 		}
 		return notSwap;
+	}
+
+	@Override
+	public String toString() {
+		return this.colChName;
 	}
 
 }

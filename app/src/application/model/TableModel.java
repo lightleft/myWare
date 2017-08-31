@@ -98,4 +98,9 @@ public class TableModel implements Comparator<TableModel> {
 		}
 		return notSwap;
 	}
+
+	@Override
+	public String toString() {
+		return this.chName;
+	}
 }

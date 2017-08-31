@@ -28,8 +28,9 @@
                                        <children>
                                           <ComboBox fx:id="tableComboBox" layoutX="87.0" layoutY="19.0" onAction="#tableComboChange" prefWidth="150.0" />
                                           <Label layoutX="31.0" layoutY="19.0" prefHeight="23.0" prefWidth="45.0" text="表选择:" />
-                                          <Button fx:id="searchFilterBtn" layoutX="336.0" layoutY="19.0" mnemonicParsing="false" onAction="#searchFilter" prefHeight="23.0" prefWidth="103.0" text="设置过滤条件" />
-                                          <Button fx:id="exportIndexBtn" layoutX="524.0" layoutY="19.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="113.0" text="目录导出" />
+                                          <Button fx:id="searchFilterBtn" layoutX="322.0" layoutY="19.0" mnemonicParsing="false" onAction="#searchFilter" prefHeight="23.0" prefWidth="103.0" text="设置过滤条件" />
+                                          <Button fx:id="exportIndexBtn" layoutX="568.0" layoutY="19.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="113.0" text="目录导出" />
+                                          <Button fx:id="search" disable="true" layoutX="450.0" layoutY="19.0" mnemonicParsing="false" onAction="#search" prefHeight="23.0" prefWidth="55.0" text="查询" />
                                        </children>
                                     </Pane>
                                     <Pane layoutY="60.0" prefHeight="340.0" prefWidth="727.0">
@@ -43,7 +44,7 @@
 								</AnchorPane>
 							</content>
 						</Tab>
-						<Tab fx:id="configPaneTab" closable="false" text="映射配置">
+						<Tab fx:id="configPaneTab" closable="false" disable="true" text="映射配置">
 							<content>
 								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="438.0" prefWidth="727.0">
 									<children>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="90.0" prefWidth="205.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.addUpdate.UpdateContr">
+   <children>
+      <Pane prefHeight="188.0" prefWidth="265.0">
+         <children>
+            <ComboBox fx:id="col" layoutX="113.0" layoutY="22.0" prefWidth="120.0" />
+            <ComboBox fx:id="rela" layoutX="113.0" layoutY="65.0" prefWidth="120.0" />
+            <TextField fx:id="filterVal" layoutX="113.0" layoutY="114.0" prefWidth="120.0" />
+            <Button fx:id="submit" layoutX="178.0" layoutY="151.0" mnemonicParsing="false" onAction="#submit" prefHeight="23.0" prefWidth="55.0" text="保存" />
+            <Label layoutX="32.0" layoutY="22.0" prefHeight="23.0" prefWidth="55.0" text="字段选择:" />
+            <Label layoutX="32.0" layoutY="65.0" prefHeight="23.0" prefWidth="55.0" text="关系选择:" />
+            <Label layoutX="32.0" layoutY="114.0" prefHeight="23.0" prefWidth="55.0" text="过滤值" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

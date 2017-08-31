@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	public static Stage LOGIN_STAGE;
 	public static Stage TABS_STAGE;
+	public static Stage SEARCH_STAGE;
+	public static Stage UPDATE_STAGE;
 	private static Logger log = LoggerFactory.getLogger(Main.class);
 
 	@Override

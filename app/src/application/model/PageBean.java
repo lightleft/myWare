@@ -9,6 +9,7 @@ public class PageBean {
 	private int size = 20;
 	private List<Map<String, Object>> data;
 	private int total;
+	private Trems ts;
 
 	public PageBean() {
 	}
@@ -55,7 +56,7 @@ public class PageBean {
 	}
 
 	public void setTotal(int total) {
-		this.total = total;
+		this.total = total < 0 ? 0 : total;
 	}
 
 	public int getStart() {
@@ -93,5 +94,17 @@ public class PageBean {
 
 	public boolean hasPerPage() {
 		return !(index == 1);
+	}
+
+	public void setTrems(List<Trem> trems) {
+		this.ts = new Trems(trems);
+	}
+
+	public String getSql(String t) {
+		return ts.getSql(t);
+	}
+
+	public Object[] getObjs() {
+		return ts.getObjs();
 	}
 }

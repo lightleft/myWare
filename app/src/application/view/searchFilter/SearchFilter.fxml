@@ -5,16 +5,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="438.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="application.view.searchFilter.SearchFilter">
+<AnchorPane prefHeight="438.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.searchFilter.SearchFilter">
    <children>
-      <ComboBox fx:id="colSelectBox" layoutX="119.0" layoutY="29.0" prefWidth="150.0" />
-      <Label layoutX="23.0" layoutY="33.0" prefHeight="15.0" prefWidth="77.0" text="过滤字段选择:" />
-      <TableView fx:id="colTable" layoutX="19.0" layoutY="60.0" prefHeight="321.0" prefWidth="266.0">
+      <TableView fx:id="colTable" layoutX="13.0" layoutY="15.0" prefHeight="352.0" prefWidth="272.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn prefWidth="90.0" text="字段名" />
+          <TableColumn prefWidth="90.0" text="过滤值" />
+            <TableColumn prefWidth="90.0" text="过滤条件" />
         </columns>
       </TableView>
+      <Button fx:id="add" layoutX="13.0" layoutY="395.0" mnemonicParsing="false" onAction="#add" prefHeight="23.0" prefWidth="70.0" text="新增" />
+      <Button fx:id="delete" layoutX="114.0" layoutY="395.0" mnemonicParsing="false" onAction="#delete" prefHeight="23.0" prefWidth="70.0" text="删除" />
+      <Button fx:id="clear" layoutX="215.0" layoutY="395.0" mnemonicParsing="false" onAction="#clear" prefHeight="23.0" prefWidth="70.0" text="清空" />
    </children>
 </AnchorPane>
